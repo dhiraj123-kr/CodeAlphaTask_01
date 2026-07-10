@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aperture — Image Gallery</title>
+<link rel="icon" href="assets/images/nature-1.jpg" type="image/jpeg" />
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ===================== LOADER ===================== -->
+<div class="loader" id="loader">
+  <div class="loader-ring"></div>
+  <p class="loader-text">Developing frames<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+</div>
+
+<!-- ===================== BACKGROUND ===================== -->
+<div class="bg-gradient" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+
+<!-- ===================== TOAST ===================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">
+        <span class="aperture-blade"></span><span class="aperture-blade"></span><span class="aperture-blade"></span>
+      </span>
+      <span class="logo-text">Aperture</span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#gallerySection" class="nav-link active">Gallery</a>
+      <a href="#statsSection" class="nav-link">Stats</a>
+      <a href="#footer" class="nav-link">About</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggleBtn" title="Search">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="icon-btn" id="themeToggleBtn" title="Toggle theme">
+        <svg id="moonIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg id="sunIcon" viewBox="0 0 24 24" fill="none" style="display:none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn nav-burger" id="navBurger" title="Menu">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="header-search-bar" id="headerSearchBar">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Search by title, category or photographer..." autocomplete="off" />
+    <span class="search-result-count" id="searchResultCount"></span>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-shapes" aria-hidden="true">
+      <span class="shape shape-1"></span>
+      <span class="shape shape-2"></span>
+      <span class="shape shape-3"></span>
+    </div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">24 curated frames · 8 collections</span>
+      <h1 class="hero-heading">Every image tells<br /><span class="text-gradient">a story worth framing.</span></h1>
+      <p class="hero-desc">A premium visual gallery of nature, technology, architecture, food, travel and more — crafted for a smooth, distraction-free browsing experience.</p>
+      <div class="hero-actions">
+        <a href="#gallerySection" class="btn btn-primary" id="exploreBtn">
+          Explore Gallery
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#statsSection" class="btn btn-ghost">View Stats</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FILTER SECTION ===================== -->
+  <section class="filter-section" id="gallerySection">
+    <div class="section-heading">
+      <h2>Browse the Collection</h2>
+      <p>Filter by category or search above to find exactly what you're looking for.</p>
+    </div>
+
+    <div class="category-filters" id="categoryFilters">
+      <button class="filter-chip active" data-category="all">All</button>
+      <button class="filter-chip" data-category="nature">Nature</button>
+      <button class="filter-chip" data-category="animals">Animals</button>
+      <button class="filter-chip" data-category="technology">Technology</button>
+      <button class="filter-chip" data-category="architecture">Architecture</button>
+      <button class="filter-chip" data-category="food">Food</button>
+      <button class="filter-chip" data-category="travel">Travel</button>
+      <button class="filter-chip" data-category="cars">Cars</button>
+      <button class="filter-chip" data-category="people">People</button>
+    </div>
+  </section>
+
+  <!-- ===================== GALLERY GRID ===================== -->
+  <section class="gallery-wrap">
+    <div class="gallery-grid" id="galleryGrid"><!-- injected by JS --></div>
+
+    <p class="empty-state" id="emptyState" style="display:none">
+      No images found. Try a different search or category.
+    </p>
+
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="btn btn-primary load-more-btn" id="loadMoreBtn">
+        Load More
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="load-more-count" id="loadMoreCount"></span>
+    </div>
+  </section>
+
+  <!-- ===================== STATS SECTION ===================== -->
+  <section class="stats-section" id="statsSection">
+    <div class="stats-grid">
+      <div class="stat-card glass">
+        <span class="stat-number" data-target="24">0</span>
+        <span class="stat-label">Total Images</span>
+      </div>
+      <div class="stat-card glass">
+        <span class="stat-number" data-target="8">0</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="stat-card glass">
+        <span class="stat-number" data-target="12">0</span>
+        <span class="stat-label">Photographers</span>
+      </div>
+      <div class="stat-card glass">
+        <span class="stat-number" data-target="0" id="favCountStat">0</span>
+        <span class="stat-label">Your Favorites</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" title="Close (Esc)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" title="Previous (←)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="lightbox-media">
+      <div class="lightbox-img-wrap">
+        <img src="" alt="" id="lightboxImg" />
+        <div class="lightbox-loading" id="lightboxLoading"></div>
+      </div>
+
+      <div class="lightbox-filters" id="lightboxFilters">
+        <button class="filter-swatch active" data-filter="none">Original</button>
+        <button class="filter-swatch" data-filter="grayscale">Grayscale</button>
+        <button class="filter-swatch" data-filter="bw">B &amp; W</button>
+        <button class="filter-swatch" data-filter="sepia">Sepia</button>
+        <button class="filter-swatch" data-filter="blur">Blur</button>
+        <button class="filter-swatch" data-filter="bright">Brightness</button>
+        <button class="filter-swatch" data-filter="contrast">Contrast</button>
+        <button class="filter-swatch" data-filter="invert">Invert</button>
+      </div>
+    </div>
+
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" title="Next (→)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="lightbox-info">
+      <div class="lightbox-info-text">
+        <h3 id="lightboxTitle">Title</h3>
+        <p id="lightboxMeta">Category · Photographer</p>
+      </div>
+      <div class="lightbox-actions">
+        <button class="icon-btn" id="lightboxLike" title="Like">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-6.7-4.35-9.3-8.2C.9 9.9 1.9 6.4 5 5.2c2-.78 4 .05 5 1.9 1-1.85 3-2.68 5-1.9 3.1 1.2 4.1 4.7 2.3 7.6C18.7 16.65 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="lightboxDownload" title="Download">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="lightboxFullscreen" title="Fullscreen">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="lightbox-counter" id="lightboxCounter">1 / 24</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SCROLL TO TOP ===================== -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer" id="footer">
+  <p>Crafted with HTML, CSS &amp; vanilla JavaScript — no frameworks involved.</p>
+  <p class="footer-sub">Aperture Gallery · A frontend portfolio project</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
