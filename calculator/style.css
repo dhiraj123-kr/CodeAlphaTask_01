@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap');
+
+:root {
+  /* Candy-sunrise palette — soft, warm, nothing near-black or cream-serif */
+  --sky-blush:   #ffd6e0;
+  --sky-butter:  #fff3b0;
+  --sky-mint:    #cdf5e3;
+  --sky-lilac:   #e4d9ff;
+
+  --card-bg:     #fffaf3;
+  --card-shadow: rgba(120, 70, 140, 0.25);
+
+  --display-from: #ff9ecb;
+  --display-to:   #7fd8ff;
+  --display-text: #3b2352;
+
+  --num-bg:      #ffe29a;
+  --num-bg-hi:   #ffd166;
+  --num-text:    #4a2e5c;
+
+  --fn-bg:       #b8f2d9;
+  --fn-bg-hi:    #8fe8bd;
+  --fn-text:     #145c4b;
+
+  --op-bg:       #ff8fa3;
+  --op-bg-hi:    #ff7092;
+  --op-text:     #fffaf6;
+
+  --eq-bg:       #5fd47e;
+  --eq-bg-hi:    #3fc767;
+  --eq-text:     #ffffff;
+
+  --selected-bg: #fff2a8;
+  --selected-text: #7a4a00;
+
+  --font-display: 'Fredoka', system-ui, sans-serif;
+  --font-ui: 'Quicksand', system-ui, sans-serif;
+
+  --key-size: 76px;
+  --gap: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: var(--font-ui);
+  background: linear-gradient(
+    120deg,
+    var(--sky-blush),
+    var(--sky-butter),
+    var(--sky-mint),
+    var(--sky-lilac)
+  );
+  background-size: 300% 300%;
+  animation: driftSky 18s ease-in-out infinite;
+  overflow: hidden;
+}
+
+@keyframes driftSky {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---------- The calculator card ---------- */
+
+.calculator {
+  width: calc(var(--key-size) * 4 + var(--gap) * 3 + 44px);
+  max-width: 100%;
+  background: var(--card-bg);
+  border-radius: 40px;
+  padding: 26px 22px;
+  box-shadow:
+    0 24px 50px var(--card-shadow),
+    0 0 0 6px rgba(255, 255, 255, 0.5) inset;
+  animation: popIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.8) translateY(18px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ---------- Display ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--display-text);
+  font-size: clamp(2.2rem, 10vw, 3.6rem);
+  text-align: right;
+  padding: 26px 20px;
+  margin-bottom: 20px;
+  border-radius: 26px;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  background: linear-gradient(135deg, var(--display-from), var(--display-to));
+  box-shadow:
+    0 6px 0 rgba(255, 255, 255, 0.5) inset,
+    0 10px 24px rgba(255, 140, 190, 0.35);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Keypad ---------- */
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, var(--key-size));
+  grid-auto-rows: var(--key-size);
+  gap: var(--gap);
+  justify-content: center;
+}
+
+.key {
+  border: none;
+  border-radius: 26px;
+  font-family: var(--font-ui);
+  font-size: 1.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--num-text);
+  background: var(--num-bg);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-radius 0.12s ease,
+              box-shadow 0.08s ease,
+              background 0.1s ease;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Staggered entrance so the keys bounce in one after another */
+.keys .key:nth-child(1)  { animation-delay: 0.02s; }
+.keys .key:nth-child(2)  { animation-delay: 0.05s; }
+.keys .key:nth-child(3)  { animation-delay: 0.08s; }
+.keys .key:nth-child(4)  { animation-delay: 0.11s; }
+.keys .key:nth-child(5)  { animation-delay: 0.14s; }
+.keys .key:nth-child(6)  { animation-delay: 0.17s; }
+.keys .key:nth-child(7)  { animation-delay: 0.20s; }
+.keys .key:nth-child(8)  { animation-delay: 0.23s; }
+.keys .key:nth-child(9)  { animation-delay: 0.26s; }
+.keys .key:nth-child(10) { animation-delay: 0.29s; }
+.keys .key:nth-child(11) { animation-delay: 0.32s; }
+.keys .key:nth-child(12) { animation-delay: 0.35s; }
+.keys .key:nth-child(13) { animation-delay: 0.38s; }
+.keys .key:nth-child(14) { animation-delay: 0.41s; }
+.keys .key:nth-child(15) { animation-delay: 0.44s; }
+.keys .key:nth-child(16) { animation-delay: 0.47s; }
+.keys .key:nth-child(17) { animation-delay: 0.50s; }
+
+.key:hover {
+  transform: translateY(-3px) rotate(-2deg);
+}
+
+/* The satisfying jelly squish when a key is actually pressed */
+.key:active,
+.key.is-pressed {
+  transform: scale(0.88, 0.9);
+  border-radius: 34px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.key--num {
+  background: var(--num-bg);
+  color: var(--num-text);
+}
+.key--num:hover { background: var(--num-bg-hi); }
+
+.key--zero {
+  grid-column: span 2;
+  text-align: left;
+  padding-left: 30px;
+}
+
+.key--fn {
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  font-size: 1.4rem;
+}
+.key--fn:hover {
+  background: var(--fn-bg-hi);
+  transform: translateY(-3px) rotate(4deg);
+}
+
+.key--op {
+  background: var(--op-bg);
+  color: var(--op-text);
+}
+.key--op:hover { background: var(--op-bg-hi); }
+
+.key--op.is-selected {
+  background: var(--selected-bg);
+  color: var(--selected-text);
+  box-shadow: 0 0 0 3px var(--op-bg) inset, 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.key--eq {
+  background: var(--eq-bg);
+  color: var(--eq-text);
+  font-size: 1.9rem;
+  animation:
+    popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    inviteGlow 2.4s ease-in-out 1s infinite;
+}
+.key--eq:hover { background: var(--eq-bg-hi); }
+.key--eq:active,
+.key--eq.is-pressed {
+  animation: none;
+}
+
+@keyframes inviteGlow {
+  0%, 100% { box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12); }
+  50%      { box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12), 0 0 0 8px rgba(95, 212, 126, 0.25); }
+}
+
+.key:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 143, 163, 0.6);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 380px) {
+  :root {
+    --key-size: 68px;
+    --gap: 12px;
+  }
+  .display {
+    padding: 22px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .calculator,
+  .key {
+    animation: none !important;
+  }
+  .key:hover,
+  .key:active {
+    transform: none;
+  }
+}
